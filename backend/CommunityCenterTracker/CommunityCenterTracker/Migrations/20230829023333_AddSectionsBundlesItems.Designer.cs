@@ -4,6 +4,7 @@ using CommunityCenterTracker.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CommunityCenterTracker.Migrations
 {
     [DbContext(typeof(CommunityCenterContext))]
-    partial class CommunityCenterContextModelSnapshot : ModelSnapshot
+    [Migration("20230829023333_AddSectionsBundlesItems")]
+    partial class AddSectionsBundlesItems
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,30 +58,19 @@ namespace CommunityCenterTracker.Migrations
                     b.Property<int?>("BundleId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Note")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Seasons")
+                    b.Property<string>("Season")
                         .IsRequired()
-                        .HasColumnType("jsonb");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("BundleId");
 
                     b.ToTable("Items");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Item");
-
-                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("CommunityCenterTracker.Model.Section", b =>
@@ -97,35 +89,10 @@ namespace CommunityCenterTracker.Migrations
                     b.ToTable("Sections");
                 });
 
-            modelBuilder.Entity("CommunityCenterTracker.Model.Items.Crop", b =>
-                {
-                    b.HasBaseType("CommunityCenterTracker.Model.Item");
-
-                    b.Property<int>("DaysToGrow")
-                        .HasColumnType("int");
-
-                    b.HasDiscriminator().HasValue("Crop");
-                });
-
-            modelBuilder.Entity("CommunityCenterTracker.Model.Items.Fish", b =>
-                {
-                    b.HasBaseType("CommunityCenterTracker.Model.Item");
-
-                    b.Property<string>("Locations")
-                        .IsRequired()
-                        .HasColumnType("jsonb");
-
-                    b.Property<string>("Times")
-                        .IsRequired()
-                        .HasColumnType("jsonb");
-
-                    b.HasDiscriminator().HasValue("Fish");
-                });
-
             modelBuilder.Entity("CommunityCenterTracker.Model.Bundle", b =>
                 {
                     b.HasOne("CommunityCenterTracker.Model.Section", "Section")
-                        .WithMany("Bundles")
+                        .WithMany()
                         .HasForeignKey("SectionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -143,11 +110,6 @@ namespace CommunityCenterTracker.Migrations
             modelBuilder.Entity("CommunityCenterTracker.Model.Bundle", b =>
                 {
                     b.Navigation("Items");
-                });
-
-            modelBuilder.Entity("CommunityCenterTracker.Model.Section", b =>
-                {
-                    b.Navigation("Bundles");
                 });
 #pragma warning restore 612, 618
         }

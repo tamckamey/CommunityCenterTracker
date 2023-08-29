@@ -10,7 +10,7 @@ namespace CommunityCenterTracker.Model
 
         public string? Name { get; set; }
 
-        //public List<Bundle>? Bundles { get; set; }
+        public List<Bundle>? Bundles { get; set; }
 
     }
 }

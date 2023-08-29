@@ -13,7 +13,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<CommunityCenterContext>(options =>
 {
-    options.UseSqlServer("Server=LAPTOP-0GTA5PA5;Integrated Security=SSPI;Database=CommunityCenterDB;User Id=tanner;Password=newpassword;Trusted_Connection=True;TrustServerCertificate=True;");
+    options.UseNpgsql("Server=localhost;Port=5432;Database=CommunityCenterDB;User Id=postgres;Password=pass;");
 });
 
 var app = builder.Build();

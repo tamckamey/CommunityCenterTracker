@@ -265,3 +265,5 @@ C:\Users\tanne\Projects\CommunityCenterTracker\backend\CommunityCenterTracker\Co
 C:\Users\tanne\Projects\CommunityCenterTracker\backend\CommunityCenterTracker\CommunityCenterTracker\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
 C:\Users\tanne\Projects\CommunityCenterTracker\backend\CommunityCenterTracker\CommunityCenterTracker\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\tanne\Projects\CommunityCenterTracker\backend\CommunityCenterTracker\CommunityCenterTracker\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+C:\Users\tanne\Projects\CommunityCenterTracker\backend\CommunityCenterTracker\CommunityCenterTracker\bin\Debug\net6.0\Npgsql.dll
+C:\Users\tanne\Projects\CommunityCenterTracker\backend\CommunityCenterTracker\CommunityCenterTracker\bin\Debug\net6.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll

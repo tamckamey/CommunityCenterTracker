@@ -24,10 +24,10 @@ namespace CommunityCenterTracker.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Section>>> GetSections()
         {
-            if (_context.Sections == null)
-            {
-                return NotFound();
-            }
+          if (_context.Sections == null)
+          {
+              return NotFound();
+          }
             return await _context.Sections.ToListAsync();
         }
 
@@ -35,10 +35,10 @@ namespace CommunityCenterTracker.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Section>> GetSection(int id)
         {
-            if (_context.Sections == null)
-            {
-                return NotFound();
-            }
+          if (_context.Sections == null)
+          {
+              return NotFound();
+          }
             var section = await _context.Sections.FindAsync(id);
 
             if (section == null)
@@ -82,18 +82,17 @@ namespace CommunityCenterTracker.Controllers
 
         // POST: api/Sections
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost("{name}")]
-        public async Task<ActionResult<Section>> PostSection(Section section, String name)
+        [HttpPost]
+        public async Task<ActionResult<Section>> PostSection(Section section)
         {
           if (_context.Sections == null)
           {
               return Problem("Entity set 'CommunityCenterContext.Sections'  is null.");
           }
-            section.Name = name;
             _context.Sections.Add(section);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetSection", section);
+            return CreatedAtAction("GetSection", new { id = section.Id }, section);
         }
 
         // DELETE: api/Sections/5

@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CommunityCenterTracker.Model;
+using AutoMapper;
+using CommunityCenterTracker.DTOs;
+using AutoMapper.QueryableExtensions;
 
 namespace CommunityCenterTracker.Controllers
 {
@@ -15,38 +18,28 @@ namespace CommunityCenterTracker.Controllers
     {
         private readonly CommunityCenterContext _context;
 
-        public BundlesController(CommunityCenterContext context)
+        private readonly IMapper _mapper;
+
+        public BundlesController(IMapper mapper, CommunityCenterContext context)
         {
+            _mapper = mapper;
             _context = context;
         }
 
         // GET: api/Bundles
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Bundle>>> GetBundles()
+        public async Task<ActionResult<List<BundleDTO>>> GetBundles()
         {
           if (_context.Bundles == null)
           {
               return NotFound();
           }
-            return await _context.Bundles.ToListAsync();
-        }
 
-        // GET: api/Bundles/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Bundle>> GetBundle(int id)
-        {
-          if (_context.Bundles == null)
-          {
-              return NotFound();
-          }
-            var bundle = await _context.Bundles.FindAsync(id);
-
-            if (bundle == null)
-            {
-                return NotFound();
-            }
-
-            return bundle;
+            var bundles = await _context.Bundles
+                .Include(bundle => bundle.Section)
+                .ToListAsync();
+            var bundleDTOs = _mapper.Map<List<BundleDTO>>(bundles);
+            return bundleDTOs;
         }
 
         // PUT: api/Bundles/5

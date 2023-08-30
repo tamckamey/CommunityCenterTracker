@@ -1,6 +1,7 @@
 ﻿using Microsoft.Identity.Client;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace CommunityCenterTracker.Model
 {
@@ -10,7 +11,8 @@ namespace CommunityCenterTracker.Model
 
         public string? Name { get; set; }
 
-        public List<Bundle>? Bundles { get; set; }
+        [JsonIgnore]
+        public ICollection<Bundle> Bundles { get; set; } = new List<Bundle>();
 
     }
 }

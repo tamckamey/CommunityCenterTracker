@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CommunityCenterTracker.Migrations
 {
     /// <inheritdoc />
-    public partial class AddsControllers : Migration
+    public partial class ManyToOne : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -51,9 +51,10 @@ namespace CommunityCenterTracker.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: false),
+                    Quantity = table.Column<int>(type: "integer", nullable: false),
                     Seasons = table.Column<string>(type: "jsonb", nullable: false),
                     Note = table.Column<string>(type: "text", nullable: true),
-                    BundleId = table.Column<int>(type: "integer", nullable: true),
+                    BundleId = table.Column<int>(type: "integer", nullable: false),
                     Discriminator = table.Column<string>(type: "text", nullable: false),
                     DaysToGrow = table.Column<int>(type: "integer", nullable: true),
                     Times = table.Column<string>(type: "jsonb", nullable: true),
@@ -66,7 +67,8 @@ namespace CommunityCenterTracker.Migrations
                         name: "FK_Items_Bundles_BundleId",
                         column: x => x.BundleId,
                         principalTable: "Bundles",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

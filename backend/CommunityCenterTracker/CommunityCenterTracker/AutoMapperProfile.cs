@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
-using CommunityCenterTracker.DTOs;
+using CommunityCenterTracker.DTOs.Bundles;
+using CommunityCenterTracker.DTOs.Items;
+using CommunityCenterTracker.DTOs.Sections;
 using CommunityCenterTracker.Model;
 
 namespace CommunityCenterTracker
@@ -8,8 +10,15 @@ namespace CommunityCenterTracker
     {
         public AutoMapperProfile()
         {
-            CreateMap<Bundle, BundleDTO>();
+            // Bundles
+            CreateMap<Bundle, ReturnBundle_BundleDTO>();
+            CreateMap<Bundle, CreateBundle_BundleDTO>();
+
+            // Sections
             CreateMap<Section, SectionDTO>();
+
+            // Items
+            CreateMap<Item, ItemDTO>();
         }
     }
 }

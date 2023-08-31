@@ -1,6 +1,6 @@
 ﻿using CommunityCenterTracker.Model;
 
-namespace CommunityCenterTracker.DTOs
+namespace CommunityCenterTracker.DTOs.Sections
 {
     public class SectionDTO
     {

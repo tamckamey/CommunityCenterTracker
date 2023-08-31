@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CommunityCenterTracker.Model;
 using AutoMapper;
-using CommunityCenterTracker.DTOs;
 using AutoMapper.QueryableExtensions;
+using CommunityCenterTracker.DTOs.Bundles;
 
 namespace CommunityCenterTracker.Controllers
 {
@@ -28,60 +28,50 @@ namespace CommunityCenterTracker.Controllers
 
         // GET: api/Bundles
         [HttpGet]
-        public async Task<ActionResult<List<BundleDTO>>> GetBundles()
+        public async Task<ActionResult<List<ReturnBundle_BundleDTO>>> GetBundles()
         {
-          if (_context.Bundles == null)
-          {
-              return NotFound();
-          }
+            if (_context.Bundles == null)
+            {
+                return NotFound();
+            }
 
             var bundles = await _context.Bundles
                 .Include(bundle => bundle.Section)
+                .Include(bundle => bundle.Items)
                 .ToListAsync();
-            var bundleDTOs = _mapper.Map<List<BundleDTO>>(bundles);
+            var bundleDTOs = _mapper.Map<List<ReturnBundle_BundleDTO>>(bundles);
             return bundleDTOs;
         }
 
-        // PUT: api/Bundles/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutBundle(int id, Bundle bundle)
+        // GET: api/Bundles
+        [HttpGet("{id}")]
+        public async Task<ActionResult<List<ReturnBundle_BundleDTO>>> GetBundles(int id)
         {
-            if (id != bundle.Id)
+            if (_context.Bundles == null)
             {
-                return BadRequest();
+                return NotFound();
             }
 
-            _context.Entry(bundle).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!BundleExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            var bundles = await _context.Bundles
+                .Include(bundle => bundle.Section)
+                .Include(bundle => bundle.Items)
+                .Where(bundle => bundle.Id.Equals(id))
+                .ToListAsync();
+            var bundleDTOs = _mapper.Map<List<ReturnBundle_BundleDTO>>(bundles);
+            return bundleDTOs;
         }
 
         // POST: api/Bundles
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Bundle>> PostBundle(Bundle bundle)
+        public async Task<ActionResult<CreateBundle_BundleDTO>> PostBundle(CreateBundle_BundleDTO bundleDto)
         {
           if (_context.Bundles == null)
           {
               return Problem("Entity set 'CommunityCenterContext.Bundles'  is null.");
           }
+
+            Bundle bundle = _mapper.Map<Bundle>(bundleDto);
             _context.Bundles.Add(bundle);
             await _context.SaveChangesAsync();
 

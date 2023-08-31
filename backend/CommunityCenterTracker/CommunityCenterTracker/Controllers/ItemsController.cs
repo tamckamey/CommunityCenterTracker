@@ -28,7 +28,9 @@ namespace CommunityCenterTracker.Controllers
           {
               return NotFound();
           }
-            return await _context.Items.ToListAsync();
+            return await _context.Items
+                .Include(Item => Item.Bundle)
+                .ToListAsync();
         }
 
         // GET: api/Items/5

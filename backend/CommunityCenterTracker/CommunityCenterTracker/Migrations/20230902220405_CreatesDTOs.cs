@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CommunityCenterTracker.Migrations
 {
     /// <inheritdoc />
-    public partial class ManyToOne : Migration
+    public partial class CreatesDTOs : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -45,7 +45,7 @@ namespace CommunityCenterTracker.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Items",
+                name: "Crop",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -54,21 +54,41 @@ namespace CommunityCenterTracker.Migrations
                     Quantity = table.Column<int>(type: "integer", nullable: false),
                     Seasons = table.Column<string>(type: "jsonb", nullable: false),
                     Note = table.Column<string>(type: "text", nullable: true),
-                    BundleId = table.Column<int>(type: "integer", nullable: false),
-                    Discriminator = table.Column<string>(type: "text", nullable: false),
-                    DaysToGrow = table.Column<int>(type: "integer", nullable: true),
-                    Times = table.Column<string>(type: "jsonb", nullable: true),
-                    Locations = table.Column<string>(type: "jsonb", nullable: true)
+                    DaysToGrow = table.Column<int>(type: "integer", nullable: false),
+                    BundleId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Items", x => x.Id);
+                    table.PrimaryKey("PK_Crop", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Items_Bundles_BundleId",
+                        name: "FK_Crop_Bundles_BundleId",
                         column: x => x.BundleId,
                         principalTable: "Bundles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Fish",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Quantity = table.Column<int>(type: "integer", nullable: false),
+                    Seasons = table.Column<string>(type: "jsonb", nullable: false),
+                    Note = table.Column<string>(type: "text", nullable: true),
+                    Times = table.Column<string>(type: "jsonb", nullable: false),
+                    Locations = table.Column<string>(type: "jsonb", nullable: false),
+                    BundleId = table.Column<int>(type: "integer", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Fish", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Fish_Bundles_BundleId",
+                        column: x => x.BundleId,
+                        principalTable: "Bundles",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -77,8 +97,13 @@ namespace CommunityCenterTracker.Migrations
                 column: "SectionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Items_BundleId",
-                table: "Items",
+                name: "IX_Crop_BundleId",
+                table: "Crop",
+                column: "BundleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Fish_BundleId",
+                table: "Fish",
                 column: "BundleId");
         }
 
@@ -86,7 +111,10 @@ namespace CommunityCenterTracker.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Items");
+                name: "Crop");
+
+            migrationBuilder.DropTable(
+                name: "Fish");
 
             migrationBuilder.DropTable(
                 name: "Bundles");

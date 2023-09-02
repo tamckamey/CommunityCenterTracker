@@ -10,6 +10,8 @@
         
         public Section? Section { get; set; }
 
-        public ICollection<Item> Items { get; } = new List<Item>();
+        public ICollection<Fish>? Fishes { get; } = new List<Fish>();
+
+        public ICollection<Crop>? Crops { get; } = new List<Crop>();
     }
 }

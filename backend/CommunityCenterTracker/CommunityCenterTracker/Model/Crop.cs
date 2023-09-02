@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CommunityCenterTracker.Model
 {
-    public class Item
+    public class Crop
     {
         public int Id { get; set; }
 
@@ -16,9 +16,7 @@ namespace CommunityCenterTracker.Model
 
         public string? Note { get; set; }
 
-        public int BundleId { get; set; }
-
-        public Bundle? Bundle { get; set; }
+        public int DaysToGrow { get; set; }
 
     }
 }

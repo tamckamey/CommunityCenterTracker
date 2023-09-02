@@ -1,8 +1,8 @@
 ﻿using CommunityCenterTracker.Model;
 
-namespace CommunityCenterTracker.DTOs.Sections
+namespace CommunityCenterTracker.DTOs
 {
-    public class SectionDTO
+    public class CreateSection_SectionDTO
     {
         public string? Name { get; set; }
 

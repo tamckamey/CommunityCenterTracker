@@ -1,4 +1,4 @@
-﻿namespace CommunityCenterTracker.DTOs.Bundles
+﻿namespace CommunityCenterTracker.DTOs
 {
     public class CreateBundle_BundleDTO
     {

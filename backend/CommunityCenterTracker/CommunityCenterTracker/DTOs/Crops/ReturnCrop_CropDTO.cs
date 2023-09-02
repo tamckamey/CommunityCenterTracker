@@ -1,11 +1,12 @@
-﻿using CommunityCenterTracker.Model;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace CommunityCenterTracker.DTOs.Items
+namespace CommunityCenterTracker.DTOs
 {
-    public class ItemDTO
+    public class ReturnCrop_CropDTO
     {
+
+        public int Id { get; set; }
 
         public string Name { get; set; }
 
@@ -15,6 +16,8 @@ namespace CommunityCenterTracker.DTOs.Items
         public string Seasons { get; set; }
 
         public string? Note { get; set; }
+
+        public int DaysToGrow { get; set; }
 
     }
 }
